@@ -1,3 +1,5 @@
 rootProject.name = 'hometasks'
 include 'lesson2'
+include 'lesson3'
+include 'lesson4'
 
