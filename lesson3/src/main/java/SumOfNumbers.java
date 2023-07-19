@@ -9,7 +9,9 @@ public class SumOfNumbers {
         System.out.println("Введите число:");
         int endNumber = input.nextInt();
         int sum = 0;
-        for (int i = 1; i <= endNumber; i++)sum+=i;
+        for (int i = 1; i <= endNumber; i++) {
+            sum += i;
+        }
         System.out.println("Сумма:" + sum);
     }
 
