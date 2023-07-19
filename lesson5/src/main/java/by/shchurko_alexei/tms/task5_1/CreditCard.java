@@ -19,7 +19,11 @@ public class CreditCard {
     }
 
     public void withdrawMoney(int money) {
-        accauntSum -= money;
+        if (accauntSum < money) {
+            System.out.println("Превышение имеющейся суммы на счете! Повторите операцию");
+        } else {
+            accauntSum -= money;
+        }
     }
 
     public void cardInfo() {
