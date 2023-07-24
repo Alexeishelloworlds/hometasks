@@ -8,7 +8,7 @@ public class Director extends Employee {
     private Employee[] subordinates;
     private int numberOfSubordinates;
 
-    public Director(String name, String surname, int workExpireence, Post post, Department department) {
+    public Director(String name, String surname, int workExpireence, Department department) {
         super(name, surname, workExpireence, Post.DIRECTOR, department);
     }
 

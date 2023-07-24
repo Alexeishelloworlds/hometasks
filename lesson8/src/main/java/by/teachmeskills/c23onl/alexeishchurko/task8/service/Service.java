@@ -2,29 +2,24 @@ package by.teachmeskills.c23onl.alexeishchurko.task8.service;
 
 import by.teachmeskills.c23onl.alexeishchurko.task8.employee.Director;
 import by.teachmeskills.c23onl.alexeishchurko.task8.employee.Employee;
+import by.teachmeskills.c23onl.alexeishchurko.task8.enums.Post;
 
 public class Service {
 
-    private boolean isFound;
-
     public void searchEmployee(Director director, String name, String surname) {
-        isFound = false;
         System.out.println((search(director, name, surname)) ? "Сотрудник найден" : "Сотрудник не найден");
     }
 
     private boolean search(Director director, String name, String surname) {
         for (Employee subordinate : director.getSubordinates()) {
-            if (isFound) {
-                return true;
-            } else if (name.equals(subordinate.getName()) && surname.equals(subordinate.getSurname())) {
+            if (name.equals(subordinate.getName()) && surname.equals(subordinate.getSurname())) {
                 System.out.println(subordinate.toString());
-                isFound = true;
                 return true;
-            } else if (subordinate.getPost().name() == "DIRECTOR") {
-                search((Director) subordinate, name, surname);
+            } else if (subordinate.getPost() == Post.DIRECTOR && search((Director) subordinate, name, surname)) {
+                return true;
             }
         }
-        return isFound;
+        return false;
     }
 
     public void printDirectSubordinates(Director director) {
@@ -39,7 +34,7 @@ public class Service {
     public void printAllSubordinates(Director director) {
         printDirectSubordinates(director);
         for (Employee subordinate : director.getSubordinates()) {
-            if (subordinate.getPost().name() == "DIRECTOR") {
+            if (subordinate.getPost() == Post.DIRECTOR) {
                 printAllSubordinates((Director) subordinate);
             }
         }
