@@ -11,13 +11,13 @@ import java.util.List;
 
 public class StudentService {
 
-    public static void showAllStudents() throws SQLException {
+    public void showAllStudents() throws SQLException {
         for (int i = 0; i < getListFromResultSet().size(); i++) {
             System.out.println((i + 1) + " " + getListFromResultSet().get(i));
         }
     }
 
-    private static List<Student> getListFromResultSet() throws SQLException {
+    private List<Student> getListFromResultSet() throws SQLException {
         Connection connection = DataBaseConnectionConfig.getConnection();
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery("select student_name, city_name from students left join cities on students.city_id = cities.id");
@@ -32,10 +32,8 @@ public class StudentService {
         return students;
     }
 
-    public static Student saveStudent(Student student) throws SQLException {
+    public Student addStudent(Student student) throws SQLException {
         Connection connection = DataBaseConnectionConfig.getConnection();
-
-        City city = CityService.saveCity(student.getCity());
 
         PreparedStatement statement1 = connection.prepareStatement("select * from students where student_name = ?");
         statement1.setString(1, student.getName());
@@ -45,6 +43,8 @@ public class StudentService {
             ResultSet resultSet2 = statement2.executeQuery("select max(id) + 1 from students");
             resultSet2.next();
             int nextId = resultSet2.getInt(1);
+
+            City city = new CityService().addCity(student.getCity());
 
             PreparedStatement statement3 = connection.prepareStatement("select id from cities where city_name =  ?");
             statement3.setString(1, city.getCityName());
@@ -62,7 +62,7 @@ public class StudentService {
         return student;
     }
 
-    public static void deleteStudent(Student student) throws SQLException {
+    public void deleteStudent(Student student) throws SQLException {
         Connection connection = DataBaseConnectionConfig.getConnection();
 
         PreparedStatement statement = connection.prepareStatement("delete from students where student_name = ?");
@@ -71,5 +71,4 @@ public class StudentService {
 
         connection.close();
     }
-
 }

@@ -7,7 +7,7 @@ import java.sql.*;
 
 public class CityService {
 
-    public static City saveCity(City city) throws SQLException {
+    public City addCity(City city) throws SQLException {
         Connection connection = DataBaseConnectionConfig.getConnection();
 
         PreparedStatement statement1 = connection.prepareStatement("select * from cities where city_name = ? ");
@@ -29,26 +29,22 @@ public class CityService {
         return city;
     }
 
-    public static void deleteCity(City city) throws SQLException {
+    public void deleteCity(City city) throws SQLException {
         Connection connection = DataBaseConnectionConfig.getConnection();
 
         PreparedStatement statement1 = connection.prepareStatement("select * from cities where city_name = ?");
         statement1.setString(1, city.getCityName());
         ResultSet resultSet1 = statement1.executeQuery();
         if (resultSet1.next()) {
-            PreparedStatement statement2 = connection.prepareStatement("select id from cities where city_name = ?");
-            statement2.setString(1, city.getCityName());
-            ResultSet resultSet2 = statement2.executeQuery();
-            resultSet2.next();
-            int cityId = resultSet2.getInt(1);
+            int cityId = resultSet1.getInt(1);
 
-            PreparedStatement statement3 = connection.prepareStatement("update students set city_id = NULL where city_id = ?");
-            statement3.setInt(1, cityId);
+            PreparedStatement statement2 = connection.prepareStatement("update students set city_id = NULL where city_id = ?");
+            statement2.setInt(1, cityId);
+            statement2.execute();
+
+            PreparedStatement statement3 = connection.prepareStatement("delete from cities where city_name = ?");
+            statement3.setString(1, city.getCityName());
             statement3.execute();
-
-            PreparedStatement statement4 = connection.prepareStatement("delete from cities where city_name = ?");
-            statement4.setString(1, city.getCityName());
-            statement4.execute();
         }
         connection.close();
     }

@@ -20,19 +20,30 @@ public class MainApp {
     // 6) удаления городов.
     // 7) удаления студентов
     public static void main(String[] args) throws SQLException {
+        StudentService studentService = new StudentService();
+        CityService cityService = new CityService();
         // 3
-        StudentService.showAllStudents();
+        studentService.showAllStudents();
         // 4
-        CityService.saveCity(new City("Vilnius"));
+        cityService.addCity(new City("Vilnius"));
         // 5
-        StudentService.saveStudent(new Student("somebody11", new City("Rome")));
-        Student student = StudentService.saveStudent(new Student("somebody12", new City("Vilnius")));
+        studentService.addStudent(new Student("somebody11", new City("Rome")));
+        Student student = studentService.addStudent(new Student("somebody12", new City("Vilnius")));
         System.out.println("------------------------");
-        StudentService.showAllStudents();
+        studentService.showAllStudents();
         System.out.println("------------------------");
         // 6
-        CityService.deleteCity(new City("Vilnius"));
+        cityService.deleteCity(new City("Vilnius"));
         // 7
-        StudentService.deleteStudent(student);
+        studentService.deleteStudent(student);
+
+        studentService.addStudent(new Student("somebody12", new City("Madrid")));
+        System.out.println("------------------------");
+        studentService.showAllStudents();
+
+        studentService.addStudent(new Student("somebody12", new City("Madrid")));
+
+        System.out.println("------------------------");
+        studentService.showAllStudents();
     }
 }
