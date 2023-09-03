@@ -10,9 +10,12 @@ import java.io.PrintWriter;
 
 @WebServlet(urlPatterns = "/servlet2")
 public class Servlet2 extends HttpServlet {
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        PrintWriter writer = resp.getWriter();
-        writer.println("Successful request to servlet2!");
+
+        try (PrintWriter writer = resp.getWriter()) {
+            writer.println("Successful request to servlet2!");
+        }
     }
 }
