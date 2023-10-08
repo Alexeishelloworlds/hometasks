@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+<!--бины Болидов-->
+    <bean class="by.teachmeskills.c23onl.alexeishchurko.task26.domain.Bolid" name="bolid1">
+        <constructor-arg name="name" value="bolid1"/>
+    </bean>
+
+    <bean class="by.teachmeskills.c23onl.alexeishchurko.task26.domain.Bolid" name="bolid2">
+        <constructor-arg name="name" value="bolid2"/>
+    </bean>
+
+    <bean class="by.teachmeskills.c23onl.alexeishchurko.task26.domain.Bolid" name="bolid3">
+        <constructor-arg name="name" value="bolid3"/>
+    </bean>
+
+<!--бины Водителей-->
+    <bean class="by.teachmeskills.c23onl.alexeishchurko.task26.domain.Driver" name="driver1">
+        <constructor-arg name="name" value="driver1"/>
+    </bean>
+
+    <bean class="by.teachmeskills.c23onl.alexeishchurko.task26.domain.Driver" name="driver2">
+        <constructor-arg name="name" value="driver2"/>
+    </bean>
+
+    <bean class="by.teachmeskills.c23onl.alexeishchurko.task26.domain.Driver" name="driver3">
+        <constructor-arg name="name" value="driver3"/>
+    </bean>
+
+<!--бины Комманд-->
+    <bean class="by.teachmeskills.c23onl.alexeishchurko.task26.domain.Command" name="command1">
+        <constructor-arg name="name" value="command1"/>
+        <constructor-arg name="bolid" ref="bolid1"/>
+        <constructor-arg name="driver" ref="driver1"/>
+    </bean>
+
+    <bean class="by.teachmeskills.c23onl.alexeishchurko.task26.domain.Command" name="command2">
+        <constructor-arg name="name" value="command2"/>
+        <constructor-arg name="bolid" ref="bolid2"/>
+        <constructor-arg name="driver" ref="driver2"/>
+    </bean>
+
+    <bean class="by.teachmeskills.c23onl.alexeishchurko.task26.domain.Command" name="command3">
+        <constructor-arg name="name" value="command3"/>
+        <constructor-arg name="bolid" ref="bolid3"/>
+        <constructor-arg name="driver" ref="driver3"/>
+    </bean>
+
+<!--бин Соревнования-->
+    <bean class="by.teachmeskills.c23onl.alexeishchurko.task26.service.impl.RacingCompetitionImpl" name="racing">
+        <constructor-arg name="commands">
+            <list>
+                <ref bean="command1"/>
+                <ref bean="command2"/>
+                <ref bean="command3"/>
+            </list>
+
+        </constructor-arg>
+    </bean>
+
+<!--бин Кошелека-->
+    <bean class="by.teachmeskills.c23onl.alexeishchurko.task26.service.impl.WalletImpl" name="wallet">
+        <constructor-arg name="sum" value="1000"/>
+    </bean>
+
+<!--бин Ввода-->
+    <bean class="by.teachmeskills.c23onl.alexeishchurko.task26.service.impl.InputImpl" name="input"/>
+
+<!--бин Букмекера-->
+    <bean class="by.teachmeskills.c23onl.alexeishchurko.task26.service.impl.BookmakerImpl" name="bookmaker">
+        <constructor-arg name="competition" ref="racing"/>
+        <constructor-arg name="wallet" ref="wallet"/>
+        <constructor-arg name="input" ref="input"/>
+    </bean>
+
+</beans>
